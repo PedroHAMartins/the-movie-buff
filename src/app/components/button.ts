@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, effect, inject, Injector, Input, signal } from '@angular/core';
 
 @Component({
   selector: 'button-component',
@@ -16,14 +16,19 @@ export class ButtonComponent {
   @Input()
   text!: string;
 
-  counter = signal<number>(0);
+  readonly counter = signal<number>(0);
+  private injector = inject(Injector);
+
+  constructor() {
+    effect(() => console.log(`Counter is: ${this.counter()}`));
+  }
 
   startCounter(operator: string) {
     if (operator === '+') {
       this.counter.set(this.counter() + 1);
     }
     if (operator === '-') {
-      this.counter.set(this.counter() - 1);
+      this.counter.update((value) => value - 1);
     }
   }
 }
