@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MovieCard, ButtonComponent } from './components';
+import { MovieCard } from './components';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MovieCard, ButtonComponent],
+  imports: [RouterOutlet, MovieCard],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

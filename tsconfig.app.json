@@ -6,7 +6,18 @@
     "outDir": "./out-tsc/app",
     "types": [
       "node"
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@/domain": ["src/app/domain/index.ts"],
+      "@/domain/*": ["src/app/domain/*"],
+      "@/core": ["src/app/core/index.ts"],
+      "@/core/*": ["src/app/core/*"],
+      "@/components": ["src/app/components/index.ts"],
+      "@/components/*": ["src/app/components/*"],
+      "@/services": ["src/app/core/services/index.ts"],
+      "@/services/*": ["src/app/core/services/*"]
+    }
   },
   "include": [
     "src/**/*.ts"
