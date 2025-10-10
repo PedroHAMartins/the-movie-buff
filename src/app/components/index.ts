@@ -1,1 +1,1 @@
-export * from './movie-card';
+export * from './ui';
