@@ -34,7 +34,7 @@ export async function requestHandler<T = unknown>({
 
     const data = await response.json();
 
-    return data as ApiResponse<T>;
+    return { data };
   } catch (e) {
     console.error('Request failed:', e);
     throw new Error(e instanceof Error ? e.message : 'Request failed');

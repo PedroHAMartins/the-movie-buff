@@ -65,9 +65,9 @@ export class Typography {
       return titleClasses[this.titleVariant];
     } else {
       const bodyClasses: Record<BodyVariant, string> = {
-        body: 'text-base leading-relaxed',
-        subtitle: 'text-lg leading-relaxed',
-        caption: 'text-sm leading-normal text-gray-600',
+        body: 'text-base',
+        subtitle: 'text-lg',
+        caption: 'text-sm',
       };
       return bodyClasses[this.bodyVariant];
     }

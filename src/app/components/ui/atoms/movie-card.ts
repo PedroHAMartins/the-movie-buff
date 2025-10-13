@@ -10,13 +10,13 @@ import { Typography } from './typography';
     <mat-card>
       <mat-card-header>
         <typography type="title" titleVariant="h3" weight="bold" class="text-blue-600">
-          Movie Title
+          {{ title }}
         </typography>
       </mat-card-header>
-      <img mat-card-image src="https://picsum.photos/200/300" />
+      <img mat-card-image src="{{ image }}" />
       <mat-card-content>
-        <typography type="body" bodyVariant="body" weight="normal" class="text-gray-700">
-          This is a movie description that shows how to use the typography component.
+        <typography type="body" bodyVariant="caption" weight="light">
+          {{ description }}
         </typography>
       </mat-card-content>
       <mat-card-footer>
@@ -25,4 +25,13 @@ import { Typography } from './typography';
     </mat-card>
   `,
 })
-export class MovieCard {}
+export class MovieCard {
+  @Input()
+  title: string | undefined;
+
+  @Input()
+  description: string | undefined;
+
+  @Input()
+  image: string | undefined;
+}

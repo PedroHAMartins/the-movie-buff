@@ -1,12 +1,15 @@
-export class Get {
-  private async getMovies() {
-    const url = process.env['TMDB_URL'];
-    const response = await fetch(url + '/movie/changes');
+import { requestHandler } from '@/core';
+import { GetPopularMoviesResponseDto } from './dtos';
+import { ApiResponse } from '@/domain';
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
+export async function getMovies(): Promise<ApiResponse<GetPopularMoviesResponseDto>> {
+  const response = await requestHandler({
+    path: '/movie/popular',
+  });
 
-    return await response.json();
+  if (!response) {
+    throw new Error(`Failed to fetch movies: ${response}`);
   }
+
+  return response as ApiResponse<GetPopularMoviesResponseDto>;
 }
