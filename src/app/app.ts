@@ -5,7 +5,7 @@ import { MoviesSection } from './components/sections/movies.section';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MoviesSection, MoviesSection],
+  imports: [RouterOutlet, MoviesSection],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

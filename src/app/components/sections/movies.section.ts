@@ -1,5 +1,4 @@
-import { Component, signal, OnInit, PLATFORM_ID, inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, signal, OnInit, PLATFORM_ID, inject, effect } from '@angular/core';
 import { MovieCard } from '../ui';
 import { getMovies, GetPopularMoviesResponseDto } from '../../../server-actions';
 
@@ -19,22 +18,15 @@ import { getMovies, GetPopularMoviesResponseDto } from '../../../server-actions'
     </div>
   `,
 })
-export class MoviesSection implements OnInit {
-  private platformId = inject(PLATFORM_ID);
+export class MoviesSection {
   movies = signal<GetPopularMoviesResponseDto['results']>([]);
 
-  ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.loadMovies();
-    }
-  }
-
-  async loadMovies() {
-    try {
-      const response = await getMovies();
-      this.movies.set(response.data.results || []);
-    } catch (error) {
-      console.error('Error loading movies:', error);
-    }
+  constructor() {
+    effect(async () => {
+      const data = await getMovies();
+      if (data) {
+        this.movies.set(data.data.results);
+      }
+    });
   }
 }
