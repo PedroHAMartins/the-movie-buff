@@ -1,27 +1,23 @@
 import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { Typography } from './typography';
 
 @Component({
   selector: 'movie-card',
-  imports: [MatCardModule, Typography],
+  imports: [MatCardModule],
   standalone: true,
   template: `
-    <mat-card>
-      <mat-card-header>
-        <typography type="title" titleVariant="h3" weight="bold" class="text-blue-600">
+    <mat-card class="h-full flex flex-col">
+      <mat-card-content class="flex-shrink-0">
+        <h1 class="text-center font-bold text-lg min-h-14 flex items-center justify-center">
           {{ title }}
-        </typography>
-      </mat-card-header>
-      <img mat-card-image src="{{ image }}" />
-      <mat-card-content>
-        <typography type="body" bodyVariant="caption" weight="light">
-          {{ description }}
-        </typography>
+        </h1>
       </mat-card-content>
-      <mat-card-footer>
-        <typography type="body" bodyVariant="caption" weight="light"> Action buttons </typography>
-      </mat-card-footer>
+      <img
+        mat-card-image
+        src="{{ image }}"
+        class="rounded-xl h-96 w-full object-cover flex-shrink-0"
+      />
+      <mat-card-footer class="flex-shrink-0 mt-auto"></mat-card-footer>
     </mat-card>
   `,
 })

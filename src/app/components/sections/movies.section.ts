@@ -8,7 +8,7 @@ import { GetPopularMoviesResponseDto } from '../../../server-actions';
   standalone: true,
   imports: [MovieCard],
   template: `
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr">
       @if (movies().length === 0) {
       <div class="col-span-full text-center py-8">
         <p class="text-gray-600">Loading movies...</p>
@@ -16,7 +16,6 @@ import { GetPopularMoviesResponseDto } from '../../../server-actions';
       } @for (movie of movies(); track movie.id) {
       <movie-card
         [title]="movie.title"
-        [description]="movie.overview"
         [image]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
       />
       }
