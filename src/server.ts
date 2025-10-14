@@ -7,6 +7,7 @@ import {
 import express from 'express';
 import { join } from 'node:path';
 import { config } from 'dotenv';
+import { apiRoutes } from './server-actions/index.js';
 
 config();
 
@@ -16,16 +17,9 @@ const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 /**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
+ * API Routes - All routes are defined in server-actions/routes.ts
  */
+app.use('/api', apiRoutes);
 
 /**
  * Serve static files from /browser
