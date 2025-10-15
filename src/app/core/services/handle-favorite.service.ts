@@ -2,12 +2,12 @@ import { Movie } from '@/domain';
 
 export class HandleFavorite {
   private favoritesKey = 'favorites';
-  private favoriteList = localStorage.getItem(this.favoritesKey);
 
   constructor() {}
 
   getFavorites(): Movie[] {
-    return this.favoriteList ? JSON.parse(this.favoriteList) : [];
+    const favoriteList = localStorage.getItem(this.favoritesKey);
+    return favoriteList ? JSON.parse(favoriteList) : [];
   }
 
   saveFavorites(favorites: Movie[]): void {

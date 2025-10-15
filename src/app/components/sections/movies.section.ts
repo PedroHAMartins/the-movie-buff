@@ -15,6 +15,7 @@ import { GetPopularMoviesResponseDto } from '../../../server-actions';
       <movie-card
         [title]="movie.title"
         [image]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+        [movie]="movie"
       />
       } }
     </div>

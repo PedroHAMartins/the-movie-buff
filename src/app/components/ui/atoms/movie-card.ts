@@ -1,7 +1,7 @@
-import { HandleFavorite } from '@/core';
-import { Component, Input } from '@angular/core';
+import { HandleFavorite, cn } from '@/core';
+import { Component, Input, ChangeDetectorRef, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { LucideAngularModule, Heart } from 'lucide-angular';
+import { LucideAngularModule } from 'lucide-angular';
 import { Icon } from './icon';
 
 @Component({
@@ -20,10 +20,20 @@ import { Icon } from './icon';
         src="{{ image }}"
         class="rounded-xl h-96 w-full object-cover flex-shrink-0"
       />
-      <mat-card-footer class="flex-shrink-0 mt-auto">
-        <button matButton class="flex items-center justify-center w-full">
-          <lucide-icon name="heart" [size]="16" class="fill-red-500"></lucide-icon>
-          Favorite
+      <mat-card-footer class="flex-shrink-0 mt-auto py-2">
+        <button
+          matButton
+          class="flex items-center justify-center w-full gap-2"
+          (click)="toggleFavorite()"
+        >
+          <lucide-icon
+            name="heart"
+            [size]="24"
+            [class]="
+              cn('cursor-pointer', isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-400')
+            "
+          ></lucide-icon>
+          {{ isFavorite ? 'Favorited' : 'Favorite' }}
         </button>
       </mat-card-footer>
     </mat-card>
@@ -38,4 +48,28 @@ export class MovieCard extends HandleFavorite {
 
   @Input()
   image: string | undefined;
+
+  @Input()
+  movie!: any;
+
+  cn = cn;
+  private cdr = inject(ChangeDetectorRef);
+
+  get isFavorite(): boolean {
+    if (!this.movie) return false;
+    const favorites = this.getFavorites();
+    return favorites.some((f) => f.id === this.movie.id);
+  }
+
+  toggleFavorite(): void {
+    if (!this.movie) return;
+
+    if (this.isFavorite) {
+      this.removeFromFavorites(this.movie.id);
+    } else {
+      this.addFavorite(this.movie);
+    }
+
+    this.cdr.detectChanges();
+  }
 }
