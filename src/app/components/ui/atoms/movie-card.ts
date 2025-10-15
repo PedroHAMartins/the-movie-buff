@@ -1,9 +1,12 @@
+import { HandleFavorite } from '@/core';
 import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { LucideAngularModule, Heart } from 'lucide-angular';
+import { Icon } from './icon';
 
 @Component({
   selector: 'movie-card',
-  imports: [MatCardModule],
+  imports: [MatCardModule, Icon, LucideAngularModule],
   standalone: true,
   template: `
     <mat-card class="h-full flex flex-col">
@@ -17,11 +20,16 @@ import { MatCardModule } from '@angular/material/card';
         src="{{ image }}"
         class="rounded-xl h-96 w-full object-cover flex-shrink-0"
       />
-      <mat-card-footer class="flex-shrink-0 mt-auto"></mat-card-footer>
+      <mat-card-footer class="flex-shrink-0 mt-auto">
+        <button matButton class="flex items-center justify-center w-full">
+          <lucide-icon name="heart" [size]="16" class="fill-red-500"></lucide-icon>
+          Favorite
+        </button>
+      </mat-card-footer>
     </mat-card>
   `,
 })
-export class MovieCard {
+export class MovieCard extends HandleFavorite {
   @Input()
   title: string | undefined;
 
