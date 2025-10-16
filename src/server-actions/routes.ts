@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { getMovies } from './get';
+import { getPopularMovies } from './get';
 
 const router = Router();
 
@@ -8,7 +8,8 @@ const router = Router();
  */
 router.get('/movies', async (req: Request, res: Response) => {
   try {
-    const data = await getMovies();
+    const page = parseInt(req.query['page'] as string) || 1;
+    const data = await getPopularMovies(page);
     res.json(data.data);
   } catch (error) {
     console.error('Error fetching popular movies:', error);

@@ -4,14 +4,24 @@ interface Props {
   method?: string;
   body?: BodyInit | null;
   path: string;
+  queryParams?: Record<string, string | number>;
 }
 
 export async function requestHandler<T = unknown>({
   method = 'GET',
   body,
   path = '',
+  queryParams,
 }: Props): Promise<ApiResponse<T>> {
-  const url = process.env['TMDB_URL'] + path;
+  let url = process.env['TMDB_URL'] + path;
+
+  if (queryParams) {
+    const searchParams = new URLSearchParams();
+    Object.entries(queryParams).forEach(([key, value]) => {
+      searchParams.append(key, value.toString());
+    });
+    url += `?${searchParams.toString()}`;
+  }
   const token = process.env['TMDB_TOKEN'];
 
   try {
