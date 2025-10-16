@@ -1,8 +1,8 @@
-import { HandleFavorite, cn } from '@/core';
-import { Component, Input, ChangeDetectorRef, inject } from '@angular/core';
+import { FavoriteService, cn } from '@/core';
+import { Component, Input, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { LucideAngularModule } from 'lucide-angular';
-import { Icon } from './icon';
+import { Icon } from '../atoms/icon';
 
 @Component({
   selector: 'movie-card',
@@ -39,7 +39,7 @@ import { Icon } from './icon';
     </mat-card>
   `,
 })
-export class MovieCard extends HandleFavorite {
+export class MovieCard {
   @Input()
   title: string | undefined;
 
@@ -53,23 +53,15 @@ export class MovieCard extends HandleFavorite {
   movie!: any;
 
   cn = cn;
-  private cdr = inject(ChangeDetectorRef);
+  private favoriteService = inject(FavoriteService);
 
   get isFavorite(): boolean {
     if (!this.movie) return false;
-    const favorites = this.getFavorites();
-    return favorites.some((f) => f.id === this.movie.id);
+    return this.favoriteService.isFavorite(this.movie.id);
   }
 
   toggleFavorite(): void {
     if (!this.movie) return;
-
-    if (this.isFavorite) {
-      this.removeFromFavorites(this.movie.id);
-    } else {
-      this.addFavorite(this.movie);
-    }
-
-    this.cdr.detectChanges();
+    this.favoriteService.toggleFavorite(this.movie);
   }
 }

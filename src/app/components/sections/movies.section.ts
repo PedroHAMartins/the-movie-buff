@@ -9,6 +9,7 @@ import { GetPopularMoviesResponseDto } from 'src/server-actions';
   standalone: true,
   imports: [MovieCard, SimpleSkeletonComponent, MatPaginatorModule],
   template: `
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Popular Movies</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr">
       @if (isLoading()) { @for (item of [1,2,3,4,5,6,7,8,9,10,11,12]; track item) {
       <simple-skeleton width="294px" height="476px" className="rounded-lg"></simple-skeleton>
@@ -19,16 +20,18 @@ import { GetPopularMoviesResponseDto } from 'src/server-actions';
         [movie]="movie"
       />
       } }
-      <mat-paginator
-        [length]="totalResults()"
-        [pageSize]="20"
-        [pageIndex]="currentPage()"
-        (page)="onPageChange($event)"
-        [hidePageSize]="true"
-        [disabled]="isLoading()"
-      >
-      </mat-paginator>
     </div>
+    <mat-paginator
+      class="mt-2"
+      [length]="totalResults()"
+      [pageSize]="20"
+      [pageIndex]="currentPage()"
+      (page)="onPageChange($event)"
+      [hidePageSize]="true"
+      [disabled]="isLoading()"
+      [showFirstLastButtons]="true"
+    >
+    </mat-paginator>
   `,
 })
 export class MoviesSection implements OnInit {

@@ -1,2 +1,2 @@
 export * from './api.service';
-export * from './handle-favorite.service';
+export * from './favorite.service';
