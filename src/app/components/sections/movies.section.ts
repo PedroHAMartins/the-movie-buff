@@ -29,7 +29,6 @@ import { GetPopularMoviesResponseDto } from 'src/server-actions';
       (page)="onPageChange($event)"
       [hidePageSize]="true"
       [disabled]="isLoading()"
-      [showFirstLastButtons]="true"
     >
     </mat-paginator>
   `,
