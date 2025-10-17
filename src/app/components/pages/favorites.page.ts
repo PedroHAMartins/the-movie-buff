@@ -1,20 +1,37 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MovieCard } from '../ui';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent, Icon, MovieCard } from '../ui';
 import { FavoriteService } from '../../core';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'favorites-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule, MatCardModule, MovieCard],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatButtonModule,
+    MatCardModule,
+    MovieCard,
+    Icon,
+    LucideAngularModule,
+  ],
   template: `
-    <div class="mb-6">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Favorite Movies</h2>
-      <p class="text-gray-600">You have {{ favoriteService.getFavoriteCount() }} favorite movies</p>
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-semibold text-gray-800">Favorite Movies</h2>
+      @if (favoriteService.getFavoriteCount() > 0) {
+      <div class="mr-2 cursor-pointer" (click)="handleDialog(true)">
+        <lucide-icon name="trash2" [size]="24"></lucide-icon>
+      </div>
+      }
     </div>
+    <p class="text-gray-600 mb-6">
+      You have {{ favoriteService.getFavoriteCount() }} favorite movies
+    </p>
 
     @if (favoriteService.getFavoriteCount() === 0) {
     <div class="text-center py-12">
@@ -51,4 +68,30 @@ import { FavoriteService } from '../../core';
 })
 export class FavoritesPage {
   favoriteService = inject(FavoriteService);
+  dialog = inject(MatDialog);
+
+  constructor() {}
+
+  handleDialog(open: boolean) {
+    if (open) {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        data: {
+          header: 'Confirmar exclusão',
+          label: 'Deseja excluir todos os favoritos?',
+          confirmText: 'Confirmar',
+          cancelText: 'Cancelar',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.handleDelete();
+        }
+      });
+    }
+  }
+
+  handleDelete() {
+    this.favoriteService.clearAllFavorites();
+  }
 }

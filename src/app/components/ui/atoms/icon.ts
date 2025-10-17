@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { Heart, LucideAngularModule } from 'lucide-angular';
+import { Heart, LucideAngularModule, Search, Trash2 } from 'lucide-angular';
 
 @NgModule({
-  imports: [LucideAngularModule.pick({ Heart })],
+  imports: [LucideAngularModule.pick({ Heart, Trash2, Search })],
 })
 export class Icon {}

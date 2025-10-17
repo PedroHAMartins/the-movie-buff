@@ -3,12 +3,13 @@ import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { filter } from 'rxjs/operators';
+import { InputComponent } from '../atoms';
 
 @Component({
   selector: 'toolbar',
-  imports: [MatToolbarModule, MatButtonModule, RouterModule],
+  imports: [MatToolbarModule, MatButtonModule, RouterModule, InputComponent],
   template: `
-    <mat-toolbar class="flex !ml-10 gap-10 !bg-transparent !font-light">
+    <mat-toolbar class="flex !ml-10 gap-10 !bg-transparent !font-light items-center">
       <button
         mat-button
         routerLink="/"
@@ -20,6 +21,7 @@ import { filter } from 'rxjs/operators';
       <button mat-button routerLink="/favorites" routerLinkActive="active-link">
         Favorite Movies
       </button>
+      <input-component label="Search movie" />
     </mat-toolbar>
   `,
   styles: [
